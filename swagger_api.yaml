@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: API - CITIBAR
+  description: ''
+  version: 1.0.0
+servers:
+  - url: https://citibar.com.br/api
+tags:
+  - name: auth
+    description: Rotas para autenticação
+paths:
+  /generate-token:
+    post:
+      tags:
+        - auth
+      summary: Gerar token para utilização do sistema
+      description: Gera token para utilização da api
+      operationId: generateToken
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: 'eyJhbGciOi'
+        '400':
+          description: Rota inválida
+components:
+  securitySchemes:
+    Token:
+      type: apiKey
+      name: Token
+      in: header
