@@ -6,7 +6,8 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,18 @@ Route::group([
     });
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => 'auth:sanctum',
+], function () {
+    Route::group([
+        'prefix' => 'menus'
+    ], function () {
+        Route::get('/', [MenuController::class, 'index'])->name('menu.index');
+    });
+
+    Route::group([
+        'prefix' => 'products'
+    ], function () {
+        Route::get('/', [ProductController::class, 'index'])->name('product.index');
+    });
 });

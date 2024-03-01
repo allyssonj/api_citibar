@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Scopes\UserLogged;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[ScopedBy(UserLogged::class)]
 class Menu extends BaseModel
 {
-    public function products(): HasMany
+    protected $hidden = ['pivot'];
+    
+    public function products(): belongsToMany
     {
-        return $this->hasMany(MenuProduct::class);
+        return $this->belongsToMany(Product::class, 'menu_products', 'menu_id', 'product_id');
     }
 }
