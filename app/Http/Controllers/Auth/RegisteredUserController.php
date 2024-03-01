@@ -18,7 +18,7 @@ class RegisteredUserController extends Controller
             'phone' => 'nullable|string|max:255',
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
