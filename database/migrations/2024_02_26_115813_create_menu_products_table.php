@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('menu_products', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('menu_id');
             $table->unsignedBigInteger('product_id');
             $table->foreign('menu_id')->references('id')->on('menus');
