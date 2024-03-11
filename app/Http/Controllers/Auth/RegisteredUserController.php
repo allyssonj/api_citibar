@@ -25,6 +25,6 @@ class RegisteredUserController extends Controller
             'phone' => $request->input('phone'),
         ]);
 
-        return response()->noContent();
+        return response()->json(['message' => 'User created successfully'], 201);
     }
 }

@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Status;
-use App\Models\Menu;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class CategoryController extends Controller
 {
     public function index(Request $request)
     {
         $page = $request->query('page', 1);
         $perPage = $request->query('per_page', 10);
 
-        $menus = Menu::with('products')->paginate($perPage, '*', 'page', $page);
+        $categories = Category::paginate($perPage, '*', 'page', $page);
 
         return response()->json([
-            'menus' => $menus
+            'categories' => $categories
         ]);
     }
 
@@ -24,17 +23,15 @@ class MenuController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'required',
         ]);
 
-        $menu = Menu::create([
+        $category = Category::create([
             'name' => $request->input('name'),
-            'status' => $request->input('status', Status::ATIVO),
             'user_id' => auth()->id()
         ]);
 
         return response()->json([
-            'message' => 'Menu created successfully'
+            'message' => 'Category created successfully'
         ]);
     }
 
@@ -42,26 +39,24 @@ class MenuController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'status' => 'required',
         ]);
 
-        $menu = Menu::findOrFail($id);
-        $menu->name = $request->input('name');
-        $menu->status = $request->input('status');
-        $menu->save();
+        $category = Category::findOrFail($id);
+        $category->name = $request->input('name');
+        $category->save();
 
         return response()->json([
-            'message' => 'Menu updated successfully'
+            'message' => 'Category updated successfully'
         ]);
     }
 
     public function destroy(int $id)
     {
-        $menu = Menu::findOrFail($id);
-        $menu->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
 
         return response()->json([
-            'message' => 'Menu deleted successfully'
+            'message' => 'Category deleted successfully'
         ]);
     }
 }

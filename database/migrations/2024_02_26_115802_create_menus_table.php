@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
+            $table->text('logo')->nullable();
             $table->string('name')->nullable();
             $table->integer('status')->default(1);
             $table->unsignedBigInteger('user_id');
